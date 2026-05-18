@@ -2,6 +2,7 @@ const express=require('express');
 const dotenv=require('dotenv');
 dotenv.config();
 const connectDB=require('./config/db');
+const authRoutes = require('./routers/authRoutes');
 const app=express();
 app.use(express.json());
 connectDB();
@@ -10,6 +11,8 @@ const PORT=8080;
 app.get('/',(req,res)=>{
     res.send('Hello world!');
 });
+
+app.use('/api/auth',authRoutes);
 
 app.listen(PORT,()=>{
     console.log('Server is running on port'+PORT);
