@@ -7,7 +7,7 @@ const predictionRoutes =require('./routers/prediction') ;
 
 const app=express();
 app.use(express.json());
-connectDB();
+
 const PORT=8080;
 
 app.get('/',(req,res)=>{
@@ -17,6 +17,12 @@ app.get('/',(req,res)=>{
 
 app.use('/api/auth',authRoutes);
 app.use("/", predictionRoutes);
-app.listen(PORT,()=>{
-    console.log('Server is running on port'+PORT);
-});
+
+const startServer = async () => {
+    await connectDB();
+    app.listen(PORT,()=>{
+        console.log('Server is running on port '+PORT);
+    });
+};
+
+startServer();
