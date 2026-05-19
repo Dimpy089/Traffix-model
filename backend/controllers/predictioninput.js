@@ -1,4 +1,4 @@
-import { Prediction } from "../models/predictioninput.js";
+const { Prediction } = require("../models/predictioninput.js");
 
  const createPredictionInput = async (req, res) => {
   try {
@@ -48,6 +48,6 @@ import { Prediction } from "../models/predictioninput.js";
   }
 };
 
-export{
+module.exports = {
     createPredictionInput
-}
+};

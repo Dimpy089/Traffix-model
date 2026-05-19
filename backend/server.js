@@ -3,6 +3,8 @@ const dotenv=require('dotenv');
 dotenv.config();
 const connectDB=require('./config/db');
 const authRoutes = require('./routers/authRoutes');
+const predictionRoutes =require('./routers/prediction') ;
+
 const app=express();
 app.use(express.json());
 connectDB();
@@ -12,8 +14,9 @@ app.get('/',(req,res)=>{
     res.send('Hello world!');
 });
 
-app.use('/api/auth',authRoutes);
 
+app.use('/api/auth',authRoutes);
+app.use("/", predictionRoutes);
 app.listen(PORT,()=>{
     console.log('Server is running on port'+PORT);
 });

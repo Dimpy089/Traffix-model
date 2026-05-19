@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const predictionSchema = new mongoose.Schema(
   {
@@ -30,7 +30,9 @@ const predictionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const Prediction = mongoose.model(
+const Prediction = mongoose.model(
   "Prediction",
   predictionSchema
 );
+
+module.exports = { Prediction };

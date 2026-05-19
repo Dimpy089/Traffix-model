@@ -1,10 +1,10 @@
-import express from "express";
-import predictionRoutes from "./routes/prediction.routes.js";
+// import express from "express";
+// import predictionRoutes from "./routers/prediction.js";
 
-const app = express();
+// const app = express();
 
-app.use(express.json());
+// app.use(express.json());
 
-app.post("/predictioninput", predictionRoutes);
+// app.use("/", predictionRoutes);
 
-export default app;
+// export default app;
