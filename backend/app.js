@@ -1,10 +1,13 @@
-// import express from "express";
-// import predictionRoutes from "./routers/prediction.js";
+import express from "express"
+import cors from "cors"
 
-// const app = express();
+import predictionRoutes from "./routes/prediction.routes.js"
 
-// app.use(express.json());
+const app = express()
 
-// app.use("/", predictionRoutes);
+app.use(cors())
+app.use(express.json())
 
-// export default app;
+app.use("/", predictionRoutes)
+
+export default app
