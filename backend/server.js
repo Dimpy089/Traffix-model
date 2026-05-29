@@ -4,6 +4,8 @@ dotenv.config();
 const connectDB=require('./config/db');
 const authRoutes = require('./routers/authRoutes');
 const predictionRoutes =require('./routers/prediction') ;
+const { loadCSV } = require("./utils/loadCsv");
+
 
 const app=express();
 app.use(express.json());
@@ -18,8 +20,12 @@ app.get('/',(req,res)=>{
 app.use('/api/auth',authRoutes);
 app.use("/", predictionRoutes);
 
+
+
+
 const startServer = async () => {
     await connectDB();
+     await loadCSV();
     app.listen(PORT,()=>{
         console.log('Server is running on port '+PORT);
     });

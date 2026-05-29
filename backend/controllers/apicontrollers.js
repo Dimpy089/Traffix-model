@@ -87,11 +87,15 @@ const predictAccident  = async(req, res) => {
 })
 });
 
+const mlResponseText = await mlResponse.text();
+
 if (!mlResponse.ok) {
-   throw new Error("ML prediction service failed");
+   throw new Error(
+      `ML prediction service failed with status ${mlResponse.status}: ${mlResponseText}`
+   );
 }
 
-const mlResult = await mlResponse.json();
+const mlResult = JSON.parse(mlResponseText);
 const riskScore = mlResult.prediction;
 const riskLevel =
    riskScore >= 0.7 ? "High" :
