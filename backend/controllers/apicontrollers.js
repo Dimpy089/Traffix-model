@@ -5,7 +5,7 @@ const { getRoadCurvature } = require("../services/curvature");
 const { getSpeedLimit } = require("../services/speedlimit");
 const {countAccidentsByLocation} = require('../services/countAccident');
 
-export const predictAccident = async(req, res) => {
+const predictAccident  = async(req, res) => {
 
    try {
    //for curvature from overpass api we need lattitude and longitude so we will convrt city to lat,long using geocoding api
@@ -37,14 +37,33 @@ export const predictAccident = async(req, res) => {
 
          const speedlimit=await getSpeedLimit(lat, lon)
 
-      res.json({
-         success: true,
-         weather,
-         curvature,
-         lightingCondition,
-         speedlimit,
-         totalAccidents: totalCount
-      })
+
+              //taking all the required parameters and sending it to ml model for prediction
+     const mlResponse = await fetch("http://localhost:5001/predict", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    curvature: curvature,
+    speed_limit: speedlimit,
+    lighting: lightingCondition,
+    weather: weather,
+    num_reported_accidents: totalCount
+  })
+});
+
+const mlResult = await mlResponse.json();
+
+   res.json({
+  success: true,
+  curvature,
+  speedlimit,
+  lightingCondition,
+  weather,
+  totalAccidents: totalCount,
+  prediction: mlResult.prediction
+    });
 
    } catch(error) {
 
@@ -54,3 +73,5 @@ export const predictAccident = async(req, res) => {
       })
    }
 }
+
+module.exports = { predictAccident };
