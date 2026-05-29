@@ -1,37 +1,38 @@
-import axios from "axios"
+const axios = require("axios");
 
-export const getSpeedLimit =
-async(lat, lon) => {
-
-   const query = `
-   [out:json];
-
-   way(around:100,${lat},${lon})
-   ["highway"];
-
-   out tags;
-   `;
+const getSpeedLimit = async (lat, lon) => {
+  try {
+    const query = `
+    [out:json];
+    way(around:100,${lat},${lon})["highway"];
+    out tags;
+    `;
 
    const response = await axios.post(
-      "https://overpass-api.de/api/interpreter",
-      query,
-      {
-         headers: {
-            "Content-Type": "text/plain"
-         }
-      }
-   )
+  "https://overpass-api.de/api/interpreter",
+  new URLSearchParams({ data: query }),
+  {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "User-Agent": "traffic-risk-backend/1.0"
+    }
+  }
+);
 
-   const roads = response.data.elements
+    const roads = response.data.elements;
 
-   if(!roads.length){
-      return 50
-   }
+    if (!roads.length) {
+      return 50;
+    }
 
-   const road = roads[0]
+    const road = roads[0];
 
-   return parseInt(
-      road.tags.maxspeed
-   ) || 50
+    return parseInt(road.tags.maxspeed) || 50;
+  } catch (error) {
+    console.log(error.message);
+    return 50;
+  }
+};
 
-}
+
+module.exports = { getSpeedLimit };

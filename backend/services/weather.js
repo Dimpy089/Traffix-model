@@ -1,6 +1,6 @@
-import axios from "axios"
+const axios = require("axios");
 
-export const getWeatherData = async(city) => {
+const getWeatherData = async (city) => {
 
    try {
 
@@ -15,3 +15,5 @@ export const getWeatherData = async(city) => {
       console.log(error.message)
    }
 }
+
+module.exports = { getWeatherData };

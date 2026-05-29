@@ -1,28 +1,29 @@
-import axios from "axios"
+const axios = require("axios");
 
-export const getRoadCurvature = async(lat, lon) => {
+ const getRoadCurvature = async(lat, lon) => {
 
    try {
 
       const query = `
       [out:json];
-      way(around:100, ${lat}, ${lon})["highway"];
-      out geom;
-
-//       Find roads within 100m
-// around this location
-// and return their coordinates
+      way(around:50, ${lat}, ${lon})["highway"];
+      out geom 1;
       `
 
+      //       Find roads within 100m
+// around this location
+// and return their coordinates
+
       const response = await axios.post(
-         "https://overpass-api.de/api/interpreter",
-         query,
-         {
-            headers: {
-               "Content-Type": "text/plain"
-            }
-         }
-      )
+  "https://overpass-api.de/api/interpreter",
+  new URLSearchParams({ data: query }),
+  {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "User-Agent": "traffic-risk-backend/1.0"
+    }
+  }
+);
 
       const roads = response.data.elements
     
@@ -86,3 +87,6 @@ export const getRoadCurvature = async(lat, lon) => {
       return "Unknown"
    }
 }
+
+
+module.exports = { getRoadCurvature };

@@ -1,6 +1,6 @@
-import axios from "axios"
+const axios = require("axios");
 
-export const getCoordinates = async(city) => {
+const getCoordinates = async(city) => {
 
    try {
 
@@ -9,14 +9,19 @@ export const getCoordinates = async(city) => {
       )
 
       const location = response.data[0]
+     
 
+      if (!location) {
+  throw new Error("City not found or coordinates unavailable");
+   }
       return {
          lat: location.lat,
          lon: location.lon
       }
 
-   } catch(error){
-
-      console.log(error.message)
-   }
+  } catch (error) {
+  throw new Error("Failed to get coordinates: " + error.message);
 }
+}
+
+module.exports = { getCoordinates };
