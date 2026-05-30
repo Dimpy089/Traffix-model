@@ -72,7 +72,10 @@ const predictAccident  = async(req, res) => {
    
 
    // sometimes Node tries localhost through IPv6 ::1, while Flask is listening on IPv4 127.0.0.1
-     const mlResponse = await fetch("http://127.0.0.1:5001/predict", {
+    
+
+   //this sends the data to ml model 
+   const mlResponse = await fetch("http://127.0.0.1:5001/predict", {
 
   method: "POST",
   headers: {
@@ -102,6 +105,8 @@ const riskLevel =
    riskScore >= 0.4 ? "Medium" :
    "Low";
 
+
+   //this sends from backend to frontend 
   res.json({
   success: true,
   city,

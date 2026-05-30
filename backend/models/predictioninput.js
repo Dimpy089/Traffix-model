@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const predictionSchema = new mongoose.Schema(
   {
     curvature: {
-      type: String,
+      type: Number,
       required: true,
     },
 
