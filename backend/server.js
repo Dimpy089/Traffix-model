@@ -1,5 +1,7 @@
 const express=require('express');
 const dotenv=require('dotenv');
+const cors=require('cors');
+const path=require('path');
 dotenv.config();
 const connectDB=require('./config/db');
 const authRoutes = require('./routers/authRoutes');
@@ -8,17 +10,20 @@ const { loadCSV } = require("./utils/loadCsv");
 
 
 const app=express();
+const frontendPath=path.join(__dirname,'..','frontend','dist');
+
+app.use(cors());
 app.use(express.json());
+app.use(express.static(frontendPath));
 
 const PORT=8080;
-
-app.get('/',(req,res)=>{
-    res.send('Hello world!');
-});
 
 
 app.use('/api/auth',authRoutes);
 app.use("/", predictionRoutes);
+app.get(/.*/,(req,res)=>{
+    res.sendFile(path.join(frontendPath,'index.html'));
+});
 
 
 
