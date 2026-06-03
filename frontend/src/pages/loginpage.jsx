@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Eye, EyeOff, Shield, Mail, Lock, AlertCircle } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import toast from 'react-hot-toast'
-import authService from '../services/authService'
+import { loginUser } from '../services/authservices'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -53,13 +53,13 @@ export default function LoginPage() {
     setLoading(true)
     try {
       //call backend 
-      const response = await authService.login(form)
+      const response = await loginUser(form)
 
-
+   //backend send token only in respond 
       
-          const { user, token } = response.data
+          const {  token } = response.data
   //save respnse from backend 
-         login(user, token)
+         login( token)
 
       toast.success('Welcome back!')
       navigate('/dashboard')

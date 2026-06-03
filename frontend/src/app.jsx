@@ -1,13 +1,13 @@
 import { BrowserRouter } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 // import { ThemeProvider } from './context/ThemeContext'
-import { AuthProvider } from './context/AuthContext'
-// import AppRoutes from './routes/AppRoutes'
+import { AuthProvider } from './context/Authcontext'
+import AppRoutes from './routes/Approutes'
 
 export default function App() {
   return (
     <BrowserRouter>
-      <ThemeProvider>
+      {/* <ThemeProvider> */}
         {/* AuthProvider wraps routes so every page can access user state */}
         <AuthProvider>
           <AppRoutes />
@@ -23,7 +23,7 @@ export default function App() {
             }}
           />
         </AuthProvider>
-      </ThemeProvider>
+      {/* </ThemeProvider> */}
     </BrowserRouter>
   )
 }

@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { AuthContext } from '../context/AuthContext'
+import { AuthContext } from '../context/Authcontext'
 
 // Custom hook — components import this instead of AuthContext directly
 // Keeps imports clean and gives a helpful error if used outside AuthProvider
